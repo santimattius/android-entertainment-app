@@ -31,11 +31,11 @@ class MovieDataSourceTest {
 
         val pictures = (1..10).map { Movie(id = it) }
 
-        coEvery { client.getMoviePopular(any()) } returns Response<Movie>(results = pictures)
+        coEvery { client.getMoviePopular(any()) } returns Result.success(Response<Movie>(results = pictures))
 
         val result = movieDataSource.getPopularMovies()
 
-        Assert.assertEquals(pictures, result)
+        Assert.assertEquals(pictures.size, result.size)
 
         coVerify { client.getMoviePopular(any()) }
     }
@@ -43,7 +43,7 @@ class MovieDataSourceTest {
     @Test
     fun `get popular movie on client result is fail`() = runBlockingTest {
 
-        coEvery { client.getMoviePopular(any()) } throws Throwable()
+        coEvery { client.getMoviePopular(any()) } returns Result.failure(Throwable())
 
         val result = movieDataSource.getPopularMovies()
 

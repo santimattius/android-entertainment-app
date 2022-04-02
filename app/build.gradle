@@ -2,24 +2,26 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'com.hiya.jacoco-android'
-
+    id 'jacoco'
+    id 'io.gitlab.arturbosch.detekt'
 }
+
+apply from: "$rootDir/gradle/jacoco.gradle"
 
 def localProperties = new Properties()
 localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion Integer.valueOf(target_sdk_version)
+    buildToolsVersion build_tools_version
 
     defaultConfig {
-        applicationId "com.santimattius.movie.app.template"
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        applicationId application_id + '.app'
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_sdk_version
+        versionCode Integer.valueOf(version_code)
+        versionName version_name
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -36,11 +38,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
     viewBinding {
@@ -48,92 +50,28 @@ android {
     }
 }
 
-def androidExclusion = [
-        '**/databinding/**/*.*',
-        '**/android/databinding/*Binding.*',
-        '**/BR.*',
-        '**/R.*',
-        '**/R$*.*',
-        '**/BuildConfig.*',
-        '**/Manifest*.*',
-        '**/*_MembersInjector.*',
-        '**/Dagger*Component.*',
-        '**/Dagger*Component$Builder.*',
-        '**/*Module_*Factory.*',
-        '**/*Fragment*.*',
-        '**/*Activity*.*',
-        '**/*Adapter*.*',
-        '**/*ViewPager*.*',
-        '**/*ViewHolder*.*',
-        '**/*Module*.*'
-]
-
-jacocoAndroidUnitTestReport {
-    excludes += androidExclusion
+detekt {
+    config = files("${project.rootDir}/config/detekt/detekt.yml")
+    baseline = file("$rootDir/detekt-baseline.xml")
+    autoCorrect = true
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    // Android KTX
-    implementation "androidx.core:core-ktx:$core_ktx_version"
-    // Support libraries
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "androidx.fragment:fragment-ktx:$fragment_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
-    implementation "androidx.recyclerview:recyclerview:$recycler_view_version"
-    implementation "com.google.android.material:material:$material_version"
-
-    // Coroutines for getting off the UI thread
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
-
-    // Retrofit for networking
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$retrofit_coroutines_adapter_version"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_interceptor_version"
-
-    // Moshi for parsing the JSON format
-    implementation "com.squareup.moshi:moshi:$moshi_version"
-    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
-
-    // Joda time library for dealing with time
-    implementation "joda-time:joda-time:$joda_version"
-
-    // ViewModel and LiveData (arch components)
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extensions_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_extensions_version"
-
-    // Logging
-    implementation "com.jakewharton.timber:timber:$timber_version"
-
-    // Glide for images
-    implementation "com.github.bumptech.glide:glide:$glide_version"
-
-    // Room database
-    implementation "androidx.room:room-runtime:$room_version"
-    implementation "androidx.legacy:legacy-support-v4:$legacy_support_version"
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
-    kapt "androidx.room:room-compiler:$room_version"
-
-    implementation "androidx.multidex:multidex:$multidex_version"
-
-    //koin
-    // Koin for Android
-    implementation "org.koin:koin-android:$koin_version"
-    // or Koin for Lifecycle scoping
-    implementation "org.koin:koin-androidx-scope:$koin_version"
-    // or Koin for Android Architecture ViewModel
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-    // or Koin for Android Fragment Factory (unstable version)
-    implementation "org.koin:koin-androidx-fragment:$koin_version"
+    kotlinCore()
+    androidCore()
+    ui()
+    coroutines()
+    lifecycle()
+    imageLoader()
+    room()
+    koin()
 
     implementation project(path: ':moviedb')
-    
-    testImplementation testLibs.values()
-    testImplementation androidxTestLibs.values()
-    androidTestImplementation androidTestLibs.values()
+
+    junit()
+    mockk()
+    androidTesting()
+
 
 }

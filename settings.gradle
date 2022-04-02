@@ -1,3 +1,3 @@
+rootProject.name = "android-entertainment-app"
 include ':app'
-rootProject.name = "android-movie-app-template"
 include ':moviedb'

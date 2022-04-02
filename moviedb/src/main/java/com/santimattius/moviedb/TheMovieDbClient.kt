@@ -6,12 +6,8 @@ import com.santimattius.moviedb.network.model.Tv
 
 interface TheMovieDbClient {
 
-    suspend fun getMoviePopular(page: Int): Response<Movie>
+    suspend fun getMoviePopular(page: Int): Result<Response<Movie>>
 
-    suspend fun getTvPopular(page: Int): Response<Tv>
+    suspend fun getTvPopular(page: Int): Result<Response<Tv>>
 
-    companion object {
-        fun factory(baseUrl: String, key: String): TheMovieDbClient =
-            TheMovieDbClientImpl(baseUrl, key)
-    }
 }

@@ -39,6 +39,7 @@ class AlertDialog private constructor(context: Context) {
 
     companion object {
 
+        @Suppress("MemberNameEqualsClassName")
         fun alertDialog(context: Context, builder: AlertDialog.() -> AlertDialog) {
             val dialogCreated = AlertDialog(context).builder()
             dialogCreated.show()
