@@ -44,12 +44,22 @@ internal class TheMovieDbClientImpl(baseUrl: String, apiKey: String) : TheMovieD
         return retrofit.get()
     }
 
-    override suspend fun getTvPopular(page: Int): Response<Tv> {
-        return tvService.getPopular(version = DEFAULT_VERSION, page = page)
+    override suspend fun getTvPopular(page: Int): Result<Response<Tv>> {
+        return try {
+            val response = tvService.getPopular(version = DEFAULT_VERSION, page = page)
+            Result.success(response)
+        } catch (ex: Throwable) {
+            Result.failure(ex)
+        }
     }
 
-    override suspend fun getMoviePopular(page: Int): Response<Movie> {
-        return movieService.getPopular(version = DEFAULT_VERSION, page = page)
+    override suspend fun getMoviePopular(page: Int): Result<Response<Movie>> {
+        return try {
+            val response = movieService.getPopular(version = DEFAULT_VERSION, page = page)
+            Result.success(response)
+        } catch (ex: Throwable) {
+            Result.failure(ex)
+        }
     }
 }
 

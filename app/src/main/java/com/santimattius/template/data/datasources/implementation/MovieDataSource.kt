@@ -7,15 +7,12 @@ import com.santimattius.template.domain.entities.Movie
 import com.santimattius.moviedb.network.model.Movie as TheMovieDbMovie
 
 internal class MovieDataSource(
-    private val theMovieDbClient: TheMovieDbClient
+    private val theMovieDbClient: TheMovieDbClient,
 ) : RemoteDataSource {
 
     override suspend fun getPopularMovies(): List<Movie> {
-        return try {
-            theMovieDbClient.getMoviePopular(page = SINGLE_PAGE).results.asMovies()
-        } catch (ex: Throwable) {
-            emptyList<Movie>()
-        }
+        return theMovieDbClient.getMoviePopular(page = SINGLE_PAGE)
+            .fold(onSuccess = { result -> result.results.asMovies() }, onFailure = { emptyList() })
     }
 
     private fun List<TheMovieDbMovie>.asMovies(): List<Movie> {
