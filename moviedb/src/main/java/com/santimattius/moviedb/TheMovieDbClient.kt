@@ -10,8 +10,4 @@ interface TheMovieDbClient {
 
     suspend fun getTvPopular(page: Int): Response<Tv>
 
-    companion object {
-        fun factory(baseUrl: String, key: String): TheMovieDbClient =
-            TheMovieDbClientImpl(baseUrl, key)
-    }
 }

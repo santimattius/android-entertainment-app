@@ -13,7 +13,7 @@ internal class RequestInterceptor(private val apiKey: String) : Interceptor {
 
         val request = chain.request()
 
-        val url = request.url().newBuilder()
+        val url = request.url.newBuilder()
             .addQueryParameter(PATH_PARAM_KEY, apiKey)
             .build()
 
