@@ -43,6 +43,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      - name: Decode BASEURL
+        env:
+          APIKEY: ${{ secrets.APIKEY }}
+        run: echo apiKey="$APIKEY" > ./local.properties
       # Execute unit tests
       - name: Unit Test with Android Emulator Runner
         uses: ReactiveCircus/android-emulator-runner@v2

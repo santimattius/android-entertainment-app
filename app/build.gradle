@@ -9,8 +9,7 @@ plugins {
 apply from: "$rootDir/gradle/jacoco.gradle"
 
 def localProperties = new Properties()
-localProperties.load(new FileInputStream(rootProject.file("local.properties")))
-
+localProperties.load(new FileInputStream(rootProject.file("./local.properties")))
 
 android {
     compileSdkVersion Integer.valueOf(target_sdk_version)
