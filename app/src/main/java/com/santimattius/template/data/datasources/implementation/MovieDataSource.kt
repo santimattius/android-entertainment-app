@@ -12,7 +12,10 @@ internal class MovieDataSource(
 
     override suspend fun getPopularMovies(): List<Movie> {
         return theMovieDbClient.getMoviePopular(page = SINGLE_PAGE)
-            .fold(onSuccess = { result -> result.results.asMovies() }, onFailure = { emptyList() })
+            .fold(
+                onSuccess = { result -> result.results.asMovies() },
+                onFailure = { emptyList() }
+            )
     }
 
     private fun List<TheMovieDbMovie>.asMovies(): List<Movie> {

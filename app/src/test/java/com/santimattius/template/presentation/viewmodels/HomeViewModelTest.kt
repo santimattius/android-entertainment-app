@@ -7,8 +7,8 @@ import com.santimattius.template.utils.getOrAwaitValue
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.IsEqual
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
@@ -24,7 +24,7 @@ class HomeViewModelTest {
 
     @ExperimentalCoroutinesApi
     @Test
-    fun `check case when init view model`() = runBlockingTest {
+    fun `check case when init view model`() {
 
         val userCase = mockk<GetPopularMovies>()
 
@@ -32,12 +32,12 @@ class HomeViewModelTest {
 
         val viewModel = HomeViewModel(userCase)
 
-        Assert.assertEquals(viewModel.state.getOrAwaitValue(), HomeState.Data(emptyList()))
+        assertThat(viewModel.state.getOrAwaitValue(), IsEqual(HomeState.Data(emptyList())))
     }
 
     @ExperimentalCoroutinesApi
     @Test
-    fun `check when init fail with exception`() = runBlockingTest {
+    fun `check when init fail with exception`() {
 
         val userCase = mockk<GetPopularMovies>()
 
@@ -45,12 +45,12 @@ class HomeViewModelTest {
 
         val viewModel = HomeViewModel(userCase)
 
-        Assert.assertEquals(viewModel.state.getOrAwaitValue(), HomeState.Error)
+        assertThat(viewModel.state.getOrAwaitValue(), IsEqual(HomeState.Error))
     }
 
     @ExperimentalCoroutinesApi
     @Test
-    fun `check case with retry`() = runBlockingTest {
+    fun `check case with retry`() {
 
         val userCase = mockk<GetPopularMovies>()
 
@@ -60,7 +60,7 @@ class HomeViewModelTest {
 
         viewModel.retry()
 
-        Assert.assertEquals(viewModel.state.getOrAwaitValue(), HomeState.Data(emptyList()))
+        assertThat(viewModel.state.getOrAwaitValue(), IsEqual(HomeState.Data(emptyList())))
     }
 
 }
