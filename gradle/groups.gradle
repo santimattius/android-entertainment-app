@@ -82,9 +82,7 @@ project.ext {
 
     mockk = Group {
         testImplementation "io.mockk:mockk:$mockk_version"
-        testImplementation "io.mockk:mockk-agent-jvm:$mockk_version"
         androidTestImplementation "io.mockk:mockk-android:$mockk_version"
-        androidTestImplementation "io.mockk:mockk-agent-jvm:$mockk_version"
     }
 
     androidTesting = Group {
