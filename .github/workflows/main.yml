@@ -52,7 +52,7 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
           api-level: 29
-          script: ./gradlew connectedCheck
+          script: ./gradlew testDebugUnitTestCoverage
 
       - name: Generate Report
         uses: actions/upload-artifact@v2
@@ -64,13 +64,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: report
-          path: app/build/reports/coverage/androidTest/debug
+          path: app/build/reports/jacoco/testDebugUnitTestCoverage
 
       - name: Upload Test Report
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          files: app/build/reports/coverage/androidTest/debug/report.xml # optional
+          files: app/build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml # optional
           flags: unittests # optional
           name: pull-request # optional
           fail_ci_if_error: true # optional (default = false)

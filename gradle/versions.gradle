@@ -40,7 +40,7 @@ project.ext {
     timber_version = "4.7.1"
     multidex_version = '2.0.1'
 
-    jacoco_version = '0.8.5'
+    jacoco_version = '0.8.8'
     detekt_version = '1.18.1'
 
     junit_version = '4.12'
