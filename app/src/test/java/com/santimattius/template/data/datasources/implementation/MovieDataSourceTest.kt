@@ -3,6 +3,7 @@ package com.santimattius.template.data.datasources.implementation
 import com.santimattius.moviedb.TheMovieDbClient
 import com.santimattius.moviedb.network.model.Movie
 import com.santimattius.moviedb.network.model.Response
+import com.santimattius.template.utils.MovieMother
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -11,7 +12,6 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-
 
 @ExperimentalCoroutinesApi
 class MovieDataSourceTest {
@@ -29,7 +29,7 @@ class MovieDataSourceTest {
     @Test
     fun `get populars movie on client result is success`() = runBlockingTest {
 
-        val pictures = (1..10).map { Movie(id = it) }
+        val pictures = MovieMother.list()
 
         coEvery { client.getMoviePopular(any()) } returns Result.success(Response<Movie>(results = pictures))
 

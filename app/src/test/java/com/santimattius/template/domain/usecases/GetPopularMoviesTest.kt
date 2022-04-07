@@ -6,32 +6,23 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Before
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.IsEqual
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class GetPopularMoviesTest {
 
-    private lateinit var repository: MovieRepository
-    private lateinit var useCase: GetPopularMovies
-
-    @Before
-    fun setUp() {
-        repository = mockk()
-        useCase = GetPopularMovies(repository)
-
-    }
+    private val repository: MovieRepository = mockk()
+    private val useCase = GetPopularMovies(repository)
 
     @Test
-    fun `invoke get popular movies use case`() = runBlockingTest {
-
+    fun `invoke get popular movies use case`() {
         coEvery { repository.getPopularMovies() } returns emptyList()
-
-        val result = useCase.invoke()
-
-        assert(result.isEmpty())
-
+        runBlockingTest {
+            val result = useCase.invoke()
+            assertThat(result, IsEqual(emptyList()))
+        }
         coVerify { repository.getPopularMovies() }
-
     }
 }

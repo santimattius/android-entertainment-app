@@ -2,15 +2,13 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'jacoco'
     id 'io.gitlab.arturbosch.detekt'
 }
 
-apply from: "$rootDir/gradle/jacoco.gradle"
+apply from: "$rootDir/gradle/report.gradle"
 
 def localProperties = new Properties()
-localProperties.load(new FileInputStream(rootProject.file("local.properties")))
-
+localProperties.load(new FileInputStream(rootProject.file("./local.properties")))
 
 android {
     compileSdkVersion Integer.valueOf(target_sdk_version)
@@ -72,6 +70,4 @@ dependencies {
     junit()
     mockk()
     androidTesting()
-
-
 }
