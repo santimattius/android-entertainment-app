@@ -70,7 +70,7 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          files: app/build/reports/jacoco/testDebugUnitTestCoverage/report.xml # optional
+          files: app/build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml # optional
           flags: unittests # optional
           name: pull-request # optional
           fail_ci_if_error: true # optional (default = false)
