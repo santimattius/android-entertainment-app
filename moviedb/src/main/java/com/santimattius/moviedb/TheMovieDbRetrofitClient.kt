@@ -62,5 +62,3 @@ internal class TheMovieDbRetrofitClient(baseUrl: String, apiKey: String) : TheMo
         }
     }
 }
-
-

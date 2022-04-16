@@ -1,6 +1,6 @@
 package com.santimattius.moviedb
 
-class TheMovieDbClientFactory {
+class TheMovieDbClientFactory private constructor() {
 
     companion object {
         private const val BASE_URL = "https://api.themoviedb.org"

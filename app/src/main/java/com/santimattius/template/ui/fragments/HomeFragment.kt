@@ -27,12 +27,12 @@ class HomeFragment : Fragment() {
         PopularMoviesAdapter { openLink(it.imageUrl) }
     }
 
-
     private lateinit var viewBinding: PopularMoviesFragmentBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         viewBinding = PopularMoviesFragmentBinding.inflate(inflater, container, false).apply {
             with(this.gridOfMovies) {
@@ -77,11 +77,9 @@ class HomeFragment : Fragment() {
         )
     }
 
-
     private fun loading(visible: Boolean) = run { viewBinding.homeProgressBar.isVisible = visible }
 
     companion object {
         private const val SPAN_ITEMS = 2
     }
-
 }

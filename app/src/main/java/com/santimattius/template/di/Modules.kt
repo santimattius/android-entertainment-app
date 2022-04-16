@@ -20,7 +20,6 @@ private val presentationModule = module {
     viewModel { HomeViewModel(getPopularMovies = get<GetPopularMovies>()) }
 }
 
-
 /**
  * domain layer definition module
  */
@@ -40,7 +39,6 @@ private val dataModule = module {
             remoteDataSource = get<RemoteDataSource>()
         )
     }
-
 }
 
 private const val API_KEY_NAMED = "api_key"

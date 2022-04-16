@@ -17,6 +17,3 @@ class PopularMoviesAdapter(private val onItemClick: (MovieUiModel) -> Unit = {})
         holder.bind(getItem(position), onItemClick)
     }
 }
-
-
-

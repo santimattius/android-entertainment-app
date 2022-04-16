@@ -35,4 +35,3 @@ class HomeViewModel(private val getPopularMovies: GetPopularMovies) : ViewModel(
         popularMovies()
     }
 }
-

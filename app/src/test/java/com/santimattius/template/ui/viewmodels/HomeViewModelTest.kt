@@ -62,5 +62,4 @@ class HomeViewModelTest {
 
         assertThat(viewModel.state.getOrAwaitValue(), IsEqual(HomeState.Data(emptyList())))
     }
-
 }
