@@ -1,4 +1,4 @@
-package com.santimattius.template.presentation.fragments
+package com.santimattius.template.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,9 +13,9 @@ import com.santimattius.template.core.presentation.openLink
 import com.santimattius.template.core.presentation.showDialog
 import com.santimattius.template.databinding.PopularMoviesFragmentBinding
 
-import com.santimattius.template.presentation.adapters.PopularMoviesAdapter
-import com.santimattius.template.presentation.viewmodels.HomeState
-import com.santimattius.template.presentation.viewmodels.HomeViewModel
+import com.santimattius.template.ui.adapters.PopularMoviesAdapter
+import com.santimattius.template.ui.viewmodels.HomeState
+import com.santimattius.template.ui.viewmodels.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 

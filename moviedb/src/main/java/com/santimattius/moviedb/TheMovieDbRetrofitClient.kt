@@ -14,7 +14,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-internal class TheMovieDbClientImpl(baseUrl: String, apiKey: String) : TheMovieDbClient {
+internal class TheMovieDbRetrofitClient(baseUrl: String, apiKey: String) : TheMovieDbClient {
 
     companion object {
         const val DEFAULT_VERSION = 3

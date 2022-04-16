@@ -27,13 +27,13 @@ internal class MovieDataSource(
             id = this.id,
             overview = this.overview,
             title = this.title,
-            posterPath = "${BASE_IMAGE_URL}${this@asMovie.posterPath}",
+            posterPath = this.poster,
             backdropPath = this.backdropPath.orEmpty()
         )
     }
 
     companion object {
         private const val SINGLE_PAGE = 1
-        private const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
+
     }
 }

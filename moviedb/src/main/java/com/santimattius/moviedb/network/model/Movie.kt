@@ -18,7 +18,7 @@ data class Movie(
     @Json(name = "genre_ids")
     val genreIds: List<Int> = emptyList(),
     @Json(name = "poster_path")
-    val posterPath: String? = null,
+    private val posterPath: String? = null,
     @Json(name = "backdrop_path")
     val backdropPath: String? = null,
     @Json(name = "release_date")
@@ -30,5 +30,8 @@ data class Movie(
     @Json(name = "adult")
     val adult: Boolean = false,
     @Json(name = "vote_count")
-    val voteCount: Int = 0
-)
+    val voteCount: Int = 0,
+) {
+    val poster: String
+        get() = "${BASE_IMAGE_URL}${posterPath}"
+}

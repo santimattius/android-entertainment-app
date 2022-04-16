@@ -1,4 +1,4 @@
-package com.santimattius.template.presentation.models
+package com.santimattius.template.ui.models
 
 data class MovieUiModel(
     val id: Int,

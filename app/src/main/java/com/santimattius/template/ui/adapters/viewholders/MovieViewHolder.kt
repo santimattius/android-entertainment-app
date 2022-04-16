@@ -1,11 +1,11 @@
-package com.santimattius.template.presentation.adapters.viewholders
+package com.santimattius.template.ui.adapters.viewholders
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.santimattius.template.core.presentation.load
 import com.santimattius.template.databinding.ItemMovieBinding
-import com.santimattius.template.presentation.models.MovieUiModel
+import com.santimattius.template.ui.models.MovieUiModel
 
 class MovieViewHolder(private val viewBinding: ItemMovieBinding) :
     RecyclerView.ViewHolder(viewBinding.root) {

@@ -1,11 +1,11 @@
-package com.santimattius.template.presentation.viewmodels
+package com.santimattius.template.ui.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.santimattius.template.domain.usecases.GetPopularMovies
-import com.santimattius.template.presentation.models.mapping.asUiModels
+import com.santimattius.template.ui.models.mapping.asUiModels
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
