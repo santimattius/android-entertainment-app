@@ -8,7 +8,7 @@ import com.santimattius.template.data.datasources.implementation.MovieDataSource
 import com.santimattius.template.data.repositories.TMDbRepository
 import com.santimattius.template.domain.repositories.MovieRepository
 import com.santimattius.template.domain.usecases.GetPopularMovies
-import com.santimattius.template.presentation.viewmodels.HomeViewModel
+import com.santimattius.template.ui.viewmodels.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -19,7 +19,6 @@ import org.koin.dsl.module
 private val presentationModule = module {
     viewModel { HomeViewModel(getPopularMovies = get<GetPopularMovies>()) }
 }
-
 
 /**
  * domain layer definition module
@@ -40,7 +39,6 @@ private val dataModule = module {
             remoteDataSource = get<RemoteDataSource>()
         )
     }
-
 }
 
 private const val API_KEY_NAMED = "api_key"

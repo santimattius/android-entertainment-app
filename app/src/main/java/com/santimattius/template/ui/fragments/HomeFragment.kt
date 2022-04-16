@@ -1,4 +1,4 @@
-package com.santimattius.template.presentation.fragments
+package com.santimattius.template.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,11 +13,10 @@ import com.santimattius.template.core.presentation.openLink
 import com.santimattius.template.core.presentation.showDialog
 import com.santimattius.template.databinding.PopularMoviesFragmentBinding
 
-import com.santimattius.template.presentation.adapters.PopularMoviesAdapter
-import com.santimattius.template.presentation.viewmodels.HomeState
-import com.santimattius.template.presentation.viewmodels.HomeViewModel
+import com.santimattius.template.ui.adapters.PopularMoviesAdapter
+import com.santimattius.template.ui.viewmodels.HomeState
+import com.santimattius.template.ui.viewmodels.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class HomeFragment : Fragment() {
 
@@ -27,12 +26,12 @@ class HomeFragment : Fragment() {
         PopularMoviesAdapter { openLink(it.imageUrl) }
     }
 
-
     private lateinit var viewBinding: PopularMoviesFragmentBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         viewBinding = PopularMoviesFragmentBinding.inflate(inflater, container, false).apply {
             with(this.gridOfMovies) {
@@ -77,11 +76,9 @@ class HomeFragment : Fragment() {
         )
     }
 
-
     private fun loading(visible: Boolean) = run { viewBinding.homeProgressBar.isVisible = visible }
 
     companion object {
         private const val SPAN_ITEMS = 2
     }
-
 }

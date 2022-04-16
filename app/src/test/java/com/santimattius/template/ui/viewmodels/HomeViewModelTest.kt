@@ -1,4 +1,4 @@
-package com.santimattius.template.presentation.viewmodels
+package com.santimattius.template.ui.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.santimattius.template.domain.usecases.GetPopularMovies
@@ -62,5 +62,4 @@ class HomeViewModelTest {
 
         assertThat(viewModel.state.getOrAwaitValue(), IsEqual(HomeState.Data(emptyList())))
     }
-
 }

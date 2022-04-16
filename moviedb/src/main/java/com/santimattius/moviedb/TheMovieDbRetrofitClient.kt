@@ -14,7 +14,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-internal class TheMovieDbClientImpl(baseUrl: String, apiKey: String) : TheMovieDbClient {
+internal class TheMovieDbRetrofitClient(baseUrl: String, apiKey: String) : TheMovieDbClient {
 
     companion object {
         const val DEFAULT_VERSION = 3
@@ -44,6 +44,7 @@ internal class TheMovieDbClientImpl(baseUrl: String, apiKey: String) : TheMovieD
         return retrofit.get()
     }
 
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun getTvPopular(page: Int): Result<Response<Tv>> {
         return try {
             val response = tvService.getPopular(version = DEFAULT_VERSION, page = page)
@@ -53,6 +54,7 @@ internal class TheMovieDbClientImpl(baseUrl: String, apiKey: String) : TheMovieD
         }
     }
 
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun getMoviePopular(page: Int): Result<Response<Movie>> {
         return try {
             val response = movieService.getPopular(version = DEFAULT_VERSION, page = page)
@@ -62,5 +64,3 @@ internal class TheMovieDbClientImpl(baseUrl: String, apiKey: String) : TheMovieD
         }
     }
 }
-
-
