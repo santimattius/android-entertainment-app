@@ -44,6 +44,7 @@ internal class TheMovieDbRetrofitClient(baseUrl: String, apiKey: String) : TheMo
         return retrofit.get()
     }
 
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun getTvPopular(page: Int): Result<Response<Tv>> {
         return try {
             val response = tvService.getPopular(version = DEFAULT_VERSION, page = page)
@@ -53,6 +54,7 @@ internal class TheMovieDbRetrofitClient(baseUrl: String, apiKey: String) : TheMo
         }
     }
 
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun getMoviePopular(page: Int): Result<Response<Movie>> {
         return try {
             val response = movieService.getPopular(version = DEFAULT_VERSION, page = page)
