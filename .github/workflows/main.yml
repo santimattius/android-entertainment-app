@@ -14,7 +14,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   detekt:
-    name: Check Code Quality
+    name: Detekt - Lint
     runs-on: ubuntu-latest
 
     steps:
@@ -24,10 +24,9 @@ jobs:
           fetch-depth: 1
           ref: ${{ github.head_ref }}
       - name: DeteKt
-        uses: alaegin/Detekt-Action@v1.19
+        uses: natiginfo/action-detekt-all@1.20.0-RC1
         with:
-          github_token: ${{ secrets.github_token }}
-          detekt_config: config/detekt/detekt.yml
+          args: --fail-fast --config config/detekt/detekt.yml
   tests:
     # The type of runner that the job will run on
     name: Tests
