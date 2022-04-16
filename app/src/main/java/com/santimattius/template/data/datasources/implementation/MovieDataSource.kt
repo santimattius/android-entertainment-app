@@ -34,6 +34,5 @@ internal class MovieDataSource(
 
     companion object {
         private const val SINGLE_PAGE = 1
-
     }
 }
