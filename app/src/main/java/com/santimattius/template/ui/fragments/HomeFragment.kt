@@ -18,7 +18,6 @@ import com.santimattius.template.ui.viewmodels.HomeState
 import com.santimattius.template.ui.viewmodels.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModel()
