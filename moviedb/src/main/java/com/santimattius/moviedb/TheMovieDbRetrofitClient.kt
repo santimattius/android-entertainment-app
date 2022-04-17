@@ -1,53 +1,22 @@
 package com.santimattius.moviedb
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.santimattius.moviedb.extensions.get
-import com.santimattius.moviedb.interceptors.RequestInterceptor
 import com.santimattius.moviedb.network.model.Movie
 import com.santimattius.moviedb.network.model.Response
 import com.santimattius.moviedb.network.model.Tv
-import com.santimattius.moviedb.network.service.MoviesService
-import com.santimattius.moviedb.network.service.TvService
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import com.santimattius.moviedb.network.service.TheMovieDBService
 
-internal class TheMovieDbRetrofitClient(baseUrl: String, apiKey: String) : TheMovieDbClient {
+internal class TheMovieDbRetrofitClient(
+    private val service: TheMovieDBService,
+) : TheMovieDbClient {
 
     companion object {
         const val DEFAULT_VERSION = 3
     }
 
-    private val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
-
-    private val client = OkHttpClient().newBuilder()
-        .addInterceptor(RequestInterceptor(apiKey))
-        .build()
-
-    private val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .client(client)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .build()
-    }
-
-    private val tvService: TvService by lazy { create() }
-    private val movieService: MoviesService by lazy { create() }
-
-    private inline fun <reified T> create(): T {
-        return retrofit.get()
-    }
-
     @Suppress("TooGenericExceptionCaught")
     override suspend fun getTvPopular(page: Int): Result<Response<Tv>> {
         return try {
-            val response = tvService.getPopular(version = DEFAULT_VERSION, page = page)
+            val response = service.getTvPopular(version = DEFAULT_VERSION, page = page)
             Result.success(response)
         } catch (ex: Throwable) {
             Result.failure(ex)
@@ -57,7 +26,7 @@ internal class TheMovieDbRetrofitClient(baseUrl: String, apiKey: String) : TheMo
     @Suppress("TooGenericExceptionCaught")
     override suspend fun getMoviePopular(page: Int): Result<Response<Movie>> {
         return try {
-            val response = movieService.getPopular(version = DEFAULT_VERSION, page = page)
+            val response = service.getMoviePopular(version = DEFAULT_VERSION, page = page)
             Result.success(response)
         } catch (ex: Throwable) {
             Result.failure(ex)
