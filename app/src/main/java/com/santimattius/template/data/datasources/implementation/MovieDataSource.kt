@@ -1,38 +1,26 @@
 package com.santimattius.template.data.datasources.implementation
 
-import com.santimattius.moviedb.TheMovieDbClient
 import com.santimattius.template.data.datasources.RemoteDataSource
-import com.santimattius.template.data.models.TMDbMovie
-import com.santimattius.template.domain.entities.Movie
-import com.santimattius.moviedb.network.model.Movie as TheMovieDbMovie
+import com.santimattius.template.data.network.service.TheMovieDBService
+import com.santimattius.template.data.entities.MovieDto as TheMovieDbMovie
 
 internal class MovieDataSource(
-    private val theMovieDbClient: TheMovieDbClient,
+    private val service: TheMovieDBService,
 ) : RemoteDataSource {
 
-    override suspend fun getPopularMovies(): List<Movie> {
-        return theMovieDbClient.getMoviePopular(page = SINGLE_PAGE)
-            .fold(
-                onSuccess = { result -> result.results.asMovies() },
-                onFailure = { emptyList() }
-            )
+    @Suppress("TooGenericExceptionCaught")
+    override suspend fun getPopularMovies(): Result<List<TheMovieDbMovie>> {
+        return try {
+            val response = service.getMoviePopular(version = DEFAULT_VERSION, page = SINGLE_PAGE)
+            Result.success(response.results)
+        } catch (ex: Throwable) {
+            Result.failure(ex)
+        }
     }
 
-    private fun List<TheMovieDbMovie>.asMovies(): List<Movie> {
-        return this.map { it.asMovie() }
-    }
-
-    private fun TheMovieDbMovie.asMovie(): Movie {
-        return TMDbMovie(
-            id = this.id,
-            overview = this.overview,
-            title = this.title,
-            posterPath = this.poster,
-            backdropPath = this.backdropPath.orEmpty()
-        )
-    }
 
     companion object {
         private const val SINGLE_PAGE = 1
+        const val DEFAULT_VERSION = 3
     }
 }

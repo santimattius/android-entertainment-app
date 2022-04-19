@@ -9,7 +9,6 @@ import org.koin.core.logger.Level
 class AppConfiguration private constructor() {
 
     companion object {
-
         fun init(app: Application) {
             startKoin {
                 androidLogger(Level.NONE)
