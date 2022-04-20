@@ -47,12 +47,13 @@ jobs:
           APIKEY: ${{ secrets.APIKEY }}
         run: echo apiKey="$APIKEY" > ./local.properties
       # Execute unit tests
-      - name: Unit Test with Android Emulator Runner
-        uses: ReactiveCircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          script: ./gradlew app:testDebugUnitTestCoverage
-
+#      - name: Unit Test with Android Emulator Runner
+#        uses: ReactiveCircus/android-emulator-runner@v2
+#        with:
+#          api-level: 29
+#          script: ./gradlew app:testDebugUnitTestCoverage
+      - name: Run Tests
+        run: ./gradlew app:testDebugUnitTestCoverage
       - name: Generate Report
         uses: actions/upload-artifact@v2
         with:
