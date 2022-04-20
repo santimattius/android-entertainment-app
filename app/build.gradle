@@ -59,13 +59,13 @@ dependencies {
     kotlinCore()
     androidCore()
     ui()
-    coroutines()
     lifecycle()
     imageLoader()
     room()
     koin()
 
-    implementation project(path: ':moviedb')
+    coroutines()
+    networking()
 
     junit()
     mockk()
