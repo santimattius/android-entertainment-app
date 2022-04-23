@@ -46,6 +46,11 @@ android {
     viewBinding {
         enabled = true
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 detekt {
@@ -56,6 +61,7 @@ detekt {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     kotlinCore()
     androidCore()
     ui()
@@ -69,5 +75,6 @@ dependencies {
 
     junit()
     mockk()
+    robolectric()
     androidTesting()
 }

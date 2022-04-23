@@ -2,18 +2,20 @@ package com.santimattius.template.ui.home.components.viewholders
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.RecyclerView
 import com.santimattius.template.core.presentation.load
 import com.santimattius.template.databinding.ItemMovieBinding
 import com.santimattius.template.ui.home.models.MovieUiModel
 
 class MovieViewHolder(
-    private val viewBinding: ItemMovieBinding) :
-    RecyclerView.ViewHolder(viewBinding.root) {
+    @VisibleForTesting internal val viewBinding: ItemMovieBinding,
+) : RecyclerView.ViewHolder(viewBinding.root) {
 
     fun bind(item: MovieUiModel, onItemClick: (MovieUiModel) -> Unit = {}) {
         with(viewBinding) {
             imageMovie.load(item.imageUrl)
+            imageMovie.contentDescription = item.title
             itemRootContainer.setOnClickListener { onItemClick(item) }
         }
     }
