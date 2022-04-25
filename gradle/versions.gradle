@@ -34,7 +34,7 @@ project.ext {
     glide_version = '4.12.0'
 
     //DI
-    koin_version = '2.1.5'
+    koin_version= "3.1.6"
 
     joda_version = '2.10.5'
     timber_version = "4.7.1"
@@ -43,8 +43,10 @@ project.ext {
     jacoco_version = '0.8.8'
     detekt_version = '1.20.0'
 
-    junit_version = '4.12'
+    junit_version = '4.13.2'
     mockk_version = '1.12.3'
+
+    robolectric_version = '4.6'
 }
 
 allprojects {

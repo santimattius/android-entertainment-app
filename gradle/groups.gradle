@@ -54,17 +54,13 @@ project.ext {
     }
 
     koin = Group {
-        // Koin for Android
-        implementation "org.koin:koin-android:$koin_version"
-        // or Koin for Lifecycle scoping
-        implementation "org.koin:koin-androidx-scope:$koin_version"
-        // or Koin for Android Architecture ViewModel
-        implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-        // or Koin for Android Fragment Factory (unstable version)
-        implementation "org.koin:koin-androidx-fragment:$koin_version"
-
-        testImplementation "org.koin:koin-test:$koin_version"
-        androidTestImplementation "org.koin:koin-test:$koin_version"
+        // Koin Core features
+        implementation "io.insert-koin:koin-core:$koin_version"
+        // Koin main features for Android
+        implementation "io.insert-koin:koin-android:$koin_version"
+        // Koin Test features
+        testImplementation "io.insert-koin:koin-test:$koin_version"
+        androidTestImplementation "io.insert-koin:koin-test:$koin_version"
     }
 
     room = Group {
@@ -85,10 +81,17 @@ project.ext {
         androidTestImplementation "io.mockk:mockk-android:$mockk_version"
     }
 
+    robolectric = Group {
+        testImplementation "org.robolectric:robolectric:$robolectric_version"
+        testImplementation "org.robolectric:shadows-httpclient:$robolectric_version"
+    }
+
     androidTesting = Group {
         androidTestImplementation 'androidx.test:runner:1.2.0'
         androidTestImplementation 'androidx.test:rules:1.2.0'
         androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
-        androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.1'
+
+        testImplementation 'androidx.test.ext:junit-ktx:1.1.3'
+        androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.3'
     }
 }

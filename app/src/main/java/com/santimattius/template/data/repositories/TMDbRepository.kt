@@ -11,19 +11,25 @@ internal class TMDbRepository(
 
     override suspend fun getPopularMovies(): List<Movie> {
         return remoteDataSource.getPopularMovies().fold(onSuccess = {
-            it.map { item -> item.asMovie() }
+            it.asMovies()
         }, onFailure = {
             emptyList()
         })
     }
 
-    private fun TheMovieDbMovie.asMovie(): Movie {
-        return Movie(
-            id = this.id,
-            overview = this.overview,
-            title = this.title,
-            posterPath = this.poster,
-            backdropPath = this.backdropPath.orEmpty()
-        )
-    }
+}
+
+internal fun List<TheMovieDbMovie>.asMovies(): List<Movie> {
+    return map { item -> item.asMovie() }
+}
+
+
+private fun TheMovieDbMovie.asMovie(): Movie {
+    return Movie(
+        id = this.id,
+        overview = this.overview,
+        title = this.title,
+        posterPath = this.poster,
+        backdropPath = this.backdropPath.orEmpty()
+    )
 }
