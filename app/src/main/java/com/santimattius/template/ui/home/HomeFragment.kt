@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
         showDialog(
             message = getString(R.string.message_loading_error),
             positiveAction = DialogAction(text = getString(R.string.button_text_positive_error)) {
-                viewModel.retry()
+                viewModel.fetch()
             },
             negativeAction = DialogAction(text = getString(R.string.button_text_negative_error)) {
                 requireActivity().finish()

@@ -8,5 +8,5 @@ internal fun List<Movie>.asUiModels() = map { it.asUiModel() }
 internal fun Movie.asUiModel() = MovieUiModel(
     id = this.id,
     title = this.title,
-    imageUrl = this.posterPath,
+    imageUrl = this.poster,
 )

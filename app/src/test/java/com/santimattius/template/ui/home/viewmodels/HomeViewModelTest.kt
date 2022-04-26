@@ -48,7 +48,7 @@ class HomeViewModelTest {
 
         val viewModel = HomeViewModel(userCase)
 
-        viewModel.retry()
+        viewModel.fetch()
 
         assertThat(viewModel.state.getOrAwaitValue(), IsEqual(HomeState.Data(emptyList())))
     }

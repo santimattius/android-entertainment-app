@@ -1,35 +1,27 @@
 package com.santimattius.template.data.repositories
 
+import com.santimattius.template.data.datasources.LocalDataSource
 import com.santimattius.template.data.datasources.RemoteDataSource
+import com.santimattius.template.data.dtoToEntity
+import com.santimattius.template.data.entityToDomain
 import com.santimattius.template.domain.entities.Movie
 import com.santimattius.template.domain.repositories.MovieRepository
-import com.santimattius.template.data.entities.MovieDto as TheMovieDbMovie
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 internal class TMDbRepository(
     private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource,
 ) : MovieRepository {
 
-    override suspend fun getPopularMovies(): List<Movie> {
-        return remoteDataSource.getPopularMovies().fold(onSuccess = {
-            it.asMovies()
-        }, onFailure = {
-            emptyList()
-        })
+    override suspend fun getPopular(): Flow<List<Movie>> = localDataSource.getAll().map {
+        it.entityToDomain()
     }
 
-}
-
-internal fun List<TheMovieDbMovie>.asMovies(): List<Movie> {
-    return map { item -> item.asMovie() }
-}
-
-
-private fun TheMovieDbMovie.asMovie(): Movie {
-    return Movie(
-        id = this.id,
-        overview = this.overview,
-        title = this.title,
-        posterPath = this.poster,
-        backdropPath = this.backdropPath.orEmpty()
-    )
+    override suspend fun fetchPopular() = remoteDataSource.getPopularMovies().fold(onSuccess = {
+        localDataSource.save(it.dtoToEntity())
+        Result.success(true)
+    }, onFailure = {
+        Result.failure(RefreshMovieFailed())
+    })
 }

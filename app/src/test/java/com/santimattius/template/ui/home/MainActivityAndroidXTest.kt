@@ -4,7 +4,7 @@ import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.santimattius.template.data.repositories.asMovies
+import com.santimattius.template.data.repositories.dtoToDomain
 import com.santimattius.template.domain.repositories.MovieRepository
 import com.santimattius.template.ui.home.components.viewholders.MovieViewHolder
 import com.santimattius.template.ui.home.viewmodels.FakeMovieRepository
@@ -36,7 +36,7 @@ class MainActivityAndroidXTest : KoinTest {
     val koinRule = KoinRule.androidx(module = module {
         single<MovieRepository> {
             FakeMovieRepository {
-                TheMovieDBMother.movies().asMovies()
+                TheMovieDBMother.movies().dtoToDomain()
             }
         }
     })

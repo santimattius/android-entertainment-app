@@ -2,7 +2,7 @@ package com.santimattius.template.ui.home
 
 import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.santimattius.template.data.repositories.asMovies
+import com.santimattius.template.data.repositories.dtoToDomain
 import com.santimattius.template.domain.repositories.MovieRepository
 import com.santimattius.template.ui.home.components.viewholders.MovieViewHolder
 import com.santimattius.template.ui.home.viewmodels.FakeMovieRepository
@@ -36,7 +36,7 @@ class MainActivityRobolectricTest : KoinTest {
     val koinRule = KoinRule.robolectric(module = module {
         single<MovieRepository> {
             FakeMovieRepository {
-                TheMovieDBMother.movies().asMovies()
+                TheMovieDBMother.movies().dtoToDomain()
             }
         }
     })

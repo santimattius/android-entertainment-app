@@ -1,4 +1,4 @@
-package com.santimattius.template.data.network.service
+package com.santimattius.template.data.client.network
 
 import com.santimattius.template.data.entities.MovieDto
 import com.santimattius.template.data.entities.Response

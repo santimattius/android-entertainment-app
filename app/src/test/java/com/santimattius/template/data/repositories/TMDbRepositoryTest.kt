@@ -22,7 +22,7 @@ class TMDbRepositoryTest {
         coEvery { remoteDataSource.getPopularMovies() } returns Result.success(emptyList())
 
         runBlockingTest {
-            val pictures = repository.getPopularMovies()
+            val pictures = repository.getPopular()
             assertThat(pictures, IsEqual(emptyList()))
         }
 
@@ -35,7 +35,7 @@ class TMDbRepositoryTest {
         coEvery { remoteDataSource.getPopularMovies() } returns Result.failure(Throwable())
 
         runBlockingTest {
-            val pictures = repository.getPopularMovies()
+            val pictures = repository.getPopular()
             assertThat(pictures, IsEqual(emptyList()))
         }
 

@@ -4,5 +4,5 @@ import com.santimattius.template.domain.entities.Movie
 import com.santimattius.template.domain.repositories.MovieRepository
 
 class FakeMovieRepository(private val answers: () -> List<Movie>) : MovieRepository {
-    override suspend fun getPopularMovies() = answers()
+    override suspend fun getPopular() = answers()
 }
