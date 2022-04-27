@@ -1,6 +1,5 @@
 package com.santimattius.template.domain.repositories
 
-import com.santimattius.template.data.entities.MovieDto
 import com.santimattius.template.domain.entities.Movie
 import kotlinx.coroutines.flow.Flow
 

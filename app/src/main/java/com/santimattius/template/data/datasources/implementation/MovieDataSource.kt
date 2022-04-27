@@ -1,7 +1,7 @@
 package com.santimattius.template.data.datasources.implementation
 
-import com.santimattius.template.data.datasources.RemoteDataSource
 import com.santimattius.template.data.client.network.TheMovieDBService
+import com.santimattius.template.data.datasources.RemoteDataSource
 import com.santimattius.template.data.entities.MovieDto as TheMovieDbMovie
 
 internal class MovieDataSource(

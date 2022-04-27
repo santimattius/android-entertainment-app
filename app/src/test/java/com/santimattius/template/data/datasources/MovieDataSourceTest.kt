@@ -1,8 +1,8 @@
 package com.santimattius.template.data.datasources
 
+import com.santimattius.template.data.client.network.TheMovieDBService
 import com.santimattius.template.data.datasources.implementation.MovieDataSource
 import com.santimattius.template.data.entities.Response
-import com.santimattius.template.data.client.network.TheMovieDBService
 import com.santimattius.template.utils.TheMovieDBMother
 import io.mockk.coEvery
 import io.mockk.coVerify

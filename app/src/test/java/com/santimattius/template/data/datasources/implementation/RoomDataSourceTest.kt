@@ -61,11 +61,6 @@ class RoomDataSourceTest : KoinTest {
     }
 
     @Test
-    fun getAll() {
-
-    }
-
-    @Test
     fun isNotEmpty() = runTest(coroutinesTestRule.testDispatcher) {
         val movies = MovieEntityMother.movies()
         dataSource.save(movies)

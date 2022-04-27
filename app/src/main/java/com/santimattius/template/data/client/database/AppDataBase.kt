@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.santimattius.template.data.entities.MovieEntity
 
-
 @Database(entities = [MovieEntity::class], version = 1, exportSchema = false)
 abstract class AppDataBase : RoomDatabase() {
 

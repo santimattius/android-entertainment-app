@@ -8,8 +8,8 @@ import com.santimattius.template.data.dtoToDomain
 import com.santimattius.template.domain.repositories.MovieRepository
 import com.santimattius.template.ui.home.components.viewholders.MovieViewHolder
 import com.santimattius.template.ui.home.viewmodels.FakeMovieRepository
-import com.santimattius.template.utils.MainCoroutinesTestRule
 import com.santimattius.template.utils.KoinRule
+import com.santimattius.template.utils.MainCoroutinesTestRule
 import com.santimattius.template.utils.TheMovieDBMother
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers.equalTo

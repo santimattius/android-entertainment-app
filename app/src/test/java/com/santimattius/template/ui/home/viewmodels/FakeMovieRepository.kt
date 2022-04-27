@@ -14,5 +14,6 @@ class FakeMovieRepository(
     constructor(fetch: Result<Boolean>) : this(answers = { emptyList() }, fetch = fetch)
 
     override suspend fun getPopular() = flowOf(answers())
+
     override suspend fun fetchPopular() = fetch
 }

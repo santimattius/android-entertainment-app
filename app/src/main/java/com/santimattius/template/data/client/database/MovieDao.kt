@@ -1,6 +1,11 @@
 package com.santimattius.template.data.client.database
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Insert
+import androidx.room.Update
+import androidx.room.Delete
+import androidx.room.OnConflictStrategy
 import com.santimattius.template.data.entities.MovieEntity
 import kotlinx.coroutines.flow.Flow
 
