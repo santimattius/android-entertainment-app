@@ -2,11 +2,11 @@ package com.santimattius.template.ui.home
 
 import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.santimattius.template.data.repositories.dtoToDomain
+import com.santimattius.template.data.dtoToDomain
 import com.santimattius.template.domain.repositories.MovieRepository
 import com.santimattius.template.ui.home.components.viewholders.MovieViewHolder
 import com.santimattius.template.ui.home.viewmodels.FakeMovieRepository
-import com.santimattius.template.utils.CoroutinesTestRule
+import com.santimattius.template.utils.MainCoroutinesTestRule
 import com.santimattius.template.utils.KoinRule
 import com.santimattius.template.utils.TheMovieDBMother
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -30,7 +30,7 @@ class MainActivityRobolectricTest : KoinTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @get:Rule
-    val coroutinesTestRule = CoroutinesTestRule()
+    val coroutinesTestRule = MainCoroutinesTestRule()
 
     @get:Rule
     val koinRule = KoinRule.robolectric(module = module {

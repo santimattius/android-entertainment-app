@@ -8,7 +8,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual
 import org.junit.Test
@@ -27,7 +27,7 @@ class MovieDataSourceTest {
             client.getMoviePopular(any(), any())
         } returns Response(results = pictures)
 
-        runBlockingTest {
+        runTest {
             val result = movieDataSource.getPopularMovies()
             assertThat(result.isSuccess, IsEqual(true))
         }
@@ -38,7 +38,7 @@ class MovieDataSourceTest {
     @Test
     fun `get popular movie on client result is fail`() {
         coEvery { client.getMoviePopular(any(), any()) } throws Throwable()
-        runBlockingTest {
+        runTest {
             val result = movieDataSource.getPopularMovies()
             assertThat(result.isFailure, IsEqual(true))
         }

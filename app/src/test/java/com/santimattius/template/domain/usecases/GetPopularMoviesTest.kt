@@ -2,7 +2,8 @@ package com.santimattius.template.domain.usecases
 
 import com.santimattius.template.ui.home.viewmodels.FakeMovieRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual
 import org.junit.Test
@@ -14,9 +15,10 @@ class GetPopularMoviesTest {
     fun `invoke get popular movies use case`() {
         val repository = FakeMovieRepository { emptyList() }
         val useCase = GetPopularMovies(repository)
-        runBlockingTest {
-            val result = useCase.invoke()
-            assertThat(result, IsEqual(emptyList()))
+        runTest {
+            useCase().collect {
+                assertThat(it.isEmpty(), IsEqual(true))
+            }
         }
     }
 }

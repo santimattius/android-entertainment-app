@@ -11,7 +11,7 @@ interface MovieDao {
     fun getAll(): Flow<List<MovieEntity>>
 
     @Query("SELECT * FROM movie WHERE id=:id")
-    suspend fun findById(id: String): MovieEntity
+    suspend fun findById(id: Int): MovieEntity?
 
     @Query("SELECT COUNT(id) FROM movie")
     fun count(): Int
