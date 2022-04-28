@@ -1,9 +1,11 @@
-package com.santimattius.template.ui.home
+package com.santimattius.template.ui.home.robolectric
 
 import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.santimattius.template.data.dtoToDomain
 import com.santimattius.template.domain.repositories.MovieRepository
+import com.santimattius.template.ui.home.HomeFragment
+import com.santimattius.template.ui.home.MainActivity
 import com.santimattius.template.ui.home.components.viewholders.MovieViewHolder
 import com.santimattius.template.ui.home.viewmodels.FakeMovieRepository
 import com.santimattius.template.utils.KoinRule
@@ -35,9 +37,7 @@ class MainActivityRobolectricTest : KoinTest {
     @get:Rule
     val koinRule = KoinRule.robolectric(module = module {
         single<MovieRepository> {
-            FakeMovieRepository {
-                TheMovieDBMother.movies().dtoToDomain()
-            }
+            FakeMovieRepository(answers = { TheMovieDBMother.movies().dtoToDomain() })
         }
     })
 

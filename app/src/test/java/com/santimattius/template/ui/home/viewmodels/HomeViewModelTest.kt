@@ -26,7 +26,7 @@ class HomeViewModelTest {
     @Test
     fun `check case when init view model`() {
 
-        val userCase = GetPopularMovies(repository = FakeMovieRepository { emptyList() })
+        val userCase = GetPopularMovies(repository = FakeMovieRepository(answers = { emptyList() }))
 
         val viewModel = HomeViewModel(userCase, mockk())
 
@@ -36,7 +36,8 @@ class HomeViewModelTest {
     @Test
     fun `check when init fail with exception`() {
 
-        val userCase = GetPopularMovies(repository = FakeMovieRepository { throw TestException() })
+        val userCase =
+            GetPopularMovies(repository = FakeMovieRepository(answers = { throw TestException() }))
 
         val viewModel = HomeViewModel(userCase, mockk())
 
@@ -46,12 +47,13 @@ class HomeViewModelTest {
     @Test
     fun `check case with retry`() {
 
-        val userCase =
-            FetchPopularMovies(repository = FakeMovieRepository(fetch = Result.failure(TestException())))
+        val userCase = FetchPopularMovies(repository = FakeMovieRepository(result = {
+            Result.failure(TestException())
+        }))
 
         val viewModel = HomeViewModel(mockk(), userCase)
 
-        viewModel.fetch()
+        viewModel.refresh()
 
         assertThat(viewModel.state.getOrAwaitValue(), IsEqual(HomeState.Error))
     }

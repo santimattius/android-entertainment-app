@@ -1,4 +1,4 @@
-package com.santimattius.template.data.datasources.implementation
+package com.santimattius.template.data.datasources.local
 
 import android.content.Context
 import android.os.Build
@@ -6,6 +6,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.santimattius.template.data.client.database.AppDataBase
+import com.santimattius.template.data.datasources.implementation.MovieEntityMother
+import com.santimattius.template.data.datasources.implementation.RoomDataSource
 import com.santimattius.template.utils.KoinRule
 import com.santimattius.template.utils.MainCoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -54,14 +56,20 @@ class RoomDataSourceTest : KoinTest {
     }
 
     @Test
-    fun saveTest() = runTest(coroutinesTestRule.testDispatcher) {
-        val movies = MovieEntityMother.movies()
-        val result = dataSource.save(movies)
-        assertThat(result.isSuccess, IsEqual(true))
-    }
+    fun `validate that the movie was saved correctly`() =
+        runTest(coroutinesTestRule.testDispatcher) {
+            val movies = MovieEntityMother.movies()
+            val randomMovie = movies.random()
+
+            val result = dataSource.save(movies)
+            val findResult = dataSource.find(randomMovie.id)
+
+            assertThat(result.isSuccess, IsEqual(true))
+            assertThat(findResult.isSuccess, IsEqual(true))
+        }
 
     @Test
-    fun isNotEmpty() = runTest(coroutinesTestRule.testDispatcher) {
+    fun `validate that there is stored data`() = runTest(coroutinesTestRule.testDispatcher) {
         val movies = MovieEntityMother.movies()
         dataSource.save(movies)
         val result = dataSource.isEmpty()
@@ -69,40 +77,48 @@ class RoomDataSourceTest : KoinTest {
     }
 
     @Test
-    fun isEmpty() = runTest(coroutinesTestRule.testDispatcher) {
+    fun `validate that there  no stored data`() = runTest(coroutinesTestRule.testDispatcher) {
         val result = dataSource.isEmpty()
         assertThat(result, IsEqual(true))
     }
 
     @Test
-    fun findWith() = runTest(coroutinesTestRule.testDispatcher) {
-        val movies = MovieEntityMother.movies()
-        dataSource.save(movies)
-        val result = dataSource.find(1)
-        assertThat(result.isSuccess, IsEqual(true))
-    }
+    fun `validate search by id when movie is stored`() =
+        runTest(coroutinesTestRule.testDispatcher) {
+            val movies = MovieEntityMother.movies()
+            val randomMovie = movies.random()
+            dataSource.save(movies)
+            val result = dataSource.find(randomMovie.id)
+            assertThat(result.isSuccess, IsEqual(true))
+        }
 
     @Test
-    fun findWithout() = runTest(coroutinesTestRule.testDispatcher) {
-        val result = dataSource.find(Random.nextInt())
-        assertThat(result.isFailure, IsEqual(true))
-    }
+    fun `validate search by id when movie is no stored`() =
+        runTest(coroutinesTestRule.testDispatcher) {
+            val result = dataSource.find(Random.nextInt())
+            assertThat(result.isFailure, IsEqual(true))
+        }
 
     @Test
-    fun delete() = runTest(coroutinesTestRule.testDispatcher) {
+    fun `validate delete when movie is stored`() = runTest(coroutinesTestRule.testDispatcher) {
         val movies = MovieEntityMother.movies()
+        val randomMovie = movies.random()
+
         dataSource.save(movies)
-        dataSource.delete(movies.first())
-        val result = dataSource.find(1)
+        dataSource.delete(randomMovie)
+
+        val result = dataSource.find(randomMovie.id)
         assertThat(result.isSuccess, IsEqual(false))
     }
 
     @Test
-    fun update() = runTest(coroutinesTestRule.testDispatcher) {
+    fun `validate update when movie is stored`() = runTest(coroutinesTestRule.testDispatcher) {
         val movie = MovieEntityMother.movie()
         dataSource.save(listOf(movie))
         val movieUpdated = movie.copy(title = "Title Updated")
+
         dataSource.update(movieUpdated)
+
         val result = dataSource.find(movieUpdated.id)
         assertThat(result.getOrNull(), IsNot(IsEqual(movie)))
     }

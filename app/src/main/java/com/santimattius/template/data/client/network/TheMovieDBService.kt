@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface TheMovieDBService {
 
-    @GET("/{version}/movie/popular")
+    @GET("/{version}/movie/top_rated")
     suspend fun getMoviePopular(
         @Path("version") version: Int,
         @Query("page") page: Int,

@@ -5,15 +5,15 @@ import androidx.room.Query
 import androidx.room.Insert
 import androidx.room.Update
 import androidx.room.Delete
+import androidx.room.Transaction
 import androidx.room.OnConflictStrategy
 import com.santimattius.template.data.entities.MovieEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
 
     @Query("SELECT * FROM movie")
-    fun getAll(): Flow<List<MovieEntity>>
+    suspend fun getAll(): List<MovieEntity>
 
     @Query("SELECT * FROM movie WHERE id=:id")
     suspend fun findById(id: Int): MovieEntity?
@@ -24,8 +24,17 @@ interface MovieDao {
     @Insert
     suspend fun insertAll(vararg movies: MovieEntity)
 
+    @Query("DELETE FROM movie")
+    fun deleteAll()
+
     @Delete
     suspend fun delete(movies: MovieEntity)
+
+    @Transaction
+    suspend fun deleteAndInsert(vararg movies: MovieEntity) {
+        deleteAll()
+        insertAll(*movies)
+    }
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(movies: MovieEntity)

@@ -16,10 +16,10 @@ class FetchPopularMoviesTest {
     @Test
     fun `verify call repository`() {
         val repository = mockk<MovieRepository>(relaxed = true)
-        coEvery { repository.fetchPopular() } returns Result.success(true)
+        coEvery { repository.fetchPopular() } returns Result.success(emptyList())
         val fetchPopularMovies = FetchPopularMovies(repository)
         runTest {
-            assertThat(fetchPopularMovies(), IsEqual(Result.success(true)))
+            assertThat(fetchPopularMovies(), IsEqual(Result.success(emptyList())))
         }
         coVerify { repository.fetchPopular() }
     }

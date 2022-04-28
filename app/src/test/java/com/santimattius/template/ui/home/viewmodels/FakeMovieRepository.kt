@@ -2,18 +2,13 @@ package com.santimattius.template.ui.home.viewmodels
 
 import com.santimattius.template.domain.entities.Movie
 import com.santimattius.template.domain.repositories.MovieRepository
-import kotlinx.coroutines.flow.flowOf
 
 class FakeMovieRepository(
-    private val answers: () -> List<Movie>,
-    private val fetch: Result<Boolean>,
+    private val answers: () -> List<Movie> = { emptyList() },
+    private val result: () -> Result<List<Movie>> = { Result.success(answers()) },
 ) : MovieRepository {
 
-    constructor(answers: () -> List<Movie>) : this(answers = answers, fetch = Result.success(true))
+    override suspend fun getPopular() = answers()
 
-    constructor(fetch: Result<Boolean>) : this(answers = { emptyList() }, fetch = fetch)
-
-    override suspend fun getPopular() = flowOf(answers())
-
-    override suspend fun fetchPopular() = fetch
+    override suspend fun fetchPopular() = result()
 }

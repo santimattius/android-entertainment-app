@@ -6,8 +6,6 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual
@@ -23,13 +21,11 @@ class TMDbRepositoryTest {
     @Test
     fun `get all movies`() {
 
-        coEvery { localDataSource.getAll() } returns emptyFlow()
+        coEvery { localDataSource.getAll() } returns emptyList()
 
         runTest {
             val result = repository.getPopular()
-            result.collect {
-                assertThat(it.isEmpty(), IsEqual(true))
-            }
+            assertThat(result.isEmpty(), IsEqual(true))
         }
 
         coVerify { localDataSource.getAll() }

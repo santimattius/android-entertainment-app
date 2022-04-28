@@ -1,4 +1,4 @@
-package com.santimattius.template.data.datasources
+package com.santimattius.template.data.datasources.remote
 
 import com.santimattius.template.data.client.network.TheMovieDBService
 import com.santimattius.template.data.datasources.implementation.MovieDataSource

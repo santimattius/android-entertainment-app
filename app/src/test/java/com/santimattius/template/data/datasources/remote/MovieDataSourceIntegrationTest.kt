@@ -1,4 +1,4 @@
-package com.santimattius.template.data.datasources
+package com.santimattius.template.data.datasources.remote
 
 
 import com.santimattius.template.data.client.network.TheMovieDBService
@@ -22,14 +22,14 @@ class MovieDataSourceIntegrationTest {
     private val jsonLoader = JsonLoader()
     private lateinit var movieDataSource: MovieDataSource
     private lateinit var mockWebServer: MockWebServer
-    private lateinit var client: TheMovieDBService
+
 
     @Before
     fun setup() {
         mockWebServer = MockWebServer()
         mockWebServer.start()
         val baseUrl = mockWebServer.url("/").toUri().toString()
-        client = service(baseUrl = baseUrl)
+        val client = service<TheMovieDBService>(baseUrl = baseUrl)
         movieDataSource = MovieDataSource(client)
     }
 

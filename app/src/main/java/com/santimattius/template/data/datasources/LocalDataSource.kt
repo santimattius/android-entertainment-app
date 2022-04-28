@@ -1,11 +1,10 @@
 package com.santimattius.template.data.datasources
 
 import com.santimattius.template.data.entities.MovieEntity
-import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {
 
-    fun getAll(): Flow<List<MovieEntity>>
+    suspend fun getAll(): List<MovieEntity>
 
     suspend fun isEmpty(): Boolean
 

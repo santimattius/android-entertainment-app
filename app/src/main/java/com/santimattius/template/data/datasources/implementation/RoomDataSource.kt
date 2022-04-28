@@ -5,8 +5,6 @@ import com.santimattius.template.data.datasources.LocalDataSource
 import com.santimattius.template.data.entities.MovieEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 
 class RoomDataSource(
@@ -14,14 +12,17 @@ class RoomDataSource(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : LocalDataSource {
 
-    override fun getAll(): Flow<List<MovieEntity>> = dao.getAll().flowOn(dispatcher)
+    override suspend fun getAll(): List<MovieEntity> = withContext(dispatcher) {
+        dao.getAll()
+    }
 
-    override suspend fun isEmpty() =
-        runWithContext { dao.count() == 0 }
-            .getOrDefault(defaultValue = false)
+    override suspend fun isEmpty() = runWithContext { count() == 0 }
+        .getOrDefault(defaultValue = false)
 
     override suspend fun save(movies: List<MovieEntity>): Result<Boolean> =
-        runWithContext { dao.insertAll(*movies.toTypedArray()); true }
+        runWithContext {
+            deleteAndInsert(*movies.toTypedArray()); true
+        }
 
     override suspend fun find(id: Int) =
         runWithContext { findById(id) }.fold(onSuccess = {

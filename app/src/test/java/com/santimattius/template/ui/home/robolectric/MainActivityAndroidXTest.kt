@@ -1,4 +1,4 @@
-package com.santimattius.template.ui.home
+package com.santimattius.template.ui.home.robolectric
 
 import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -6,6 +6,7 @@ import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.santimattius.template.data.dtoToDomain
 import com.santimattius.template.domain.repositories.MovieRepository
+import com.santimattius.template.ui.home.HomeFragment
 import com.santimattius.template.ui.home.components.viewholders.MovieViewHolder
 import com.santimattius.template.ui.home.viewmodels.FakeMovieRepository
 import com.santimattius.template.utils.KoinRule
@@ -35,9 +36,7 @@ class MainActivityAndroidXTest : KoinTest {
     @get:Rule
     val koinRule = KoinRule.androidx(module = module {
         single<MovieRepository> {
-            FakeMovieRepository {
-                TheMovieDBMother.movies().dtoToDomain()
-            }
+            FakeMovieRepository(answers = { TheMovieDBMother.movies().dtoToDomain() })
         }
     })
 
