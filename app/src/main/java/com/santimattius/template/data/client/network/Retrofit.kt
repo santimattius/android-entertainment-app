@@ -1,4 +1,4 @@
-package com.santimattius.template.data.network.service
+package com.santimattius.template.data.client.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi

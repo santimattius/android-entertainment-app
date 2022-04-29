@@ -1,6 +1,5 @@
 package com.santimattius.template.data.entities
 
-import com.santimattius.template.data.network.model.BASE_IMAGE_URL
 import com.squareup.moshi.Json
 
 data class MovieDto(
@@ -34,5 +33,5 @@ data class MovieDto(
     val voteCount: Int = 0,
 ) {
     val poster: String
-        get() = "$BASE_IMAGE_URL${posterPath}"
+        get() = "https://image.tmdb.org/t/p/w500${posterPath}"
 }

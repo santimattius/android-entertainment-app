@@ -1,35 +1,29 @@
 package com.santimattius.template.data.repositories
 
+import com.santimattius.template.data.datasources.LocalDataSource
 import com.santimattius.template.data.datasources.RemoteDataSource
+import com.santimattius.template.data.dtoToEntity
+import com.santimattius.template.data.entityToDomain
 import com.santimattius.template.domain.entities.Movie
 import com.santimattius.template.domain.repositories.MovieRepository
-import com.santimattius.template.data.entities.MovieDto as TheMovieDbMovie
 
 internal class TMDbRepository(
     private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource,
 ) : MovieRepository {
 
-    override suspend fun getPopularMovies(): List<Movie> {
-        return remoteDataSource.getPopularMovies().fold(onSuccess = {
-            it.asMovies()
-        }, onFailure = {
-            emptyList()
-        })
+    override suspend fun getPopular(): List<Movie> {
+        if (localDataSource.isEmpty()) {
+            val movies = remoteDataSource.getPopularMovies().getOrDefault(emptyList())
+            localDataSource.save(movies.dtoToEntity())
+        }
+        return localDataSource.getAll().entityToDomain()
     }
 
-}
-
-internal fun List<TheMovieDbMovie>.asMovies(): List<Movie> {
-    return map { item -> item.asMovie() }
-}
-
-
-private fun TheMovieDbMovie.asMovie(): Movie {
-    return Movie(
-        id = this.id,
-        overview = this.overview,
-        title = this.title,
-        posterPath = this.poster,
-        backdropPath = this.backdropPath.orEmpty()
-    )
+    override suspend fun fetchPopular() = remoteDataSource.getPopularMovies().fold(onSuccess = {
+        localDataSource.save(it.dtoToEntity())
+        Result.success(localDataSource.getAll().entityToDomain())
+    }, onFailure = {
+        Result.failure(RefreshMovieFailed())
+    })
 }

@@ -1,7 +1,7 @@
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "0.8.7"
+    toolVersion = "0.8.8"
 }
 
 project.afterEvaluate {
@@ -40,7 +40,12 @@ ext.excludes = [
         '**/*_MembersInjector.class',
         '**/*_Factory*.*',
         '**/*_Provide*Factory*.*',
-        '**/*Extensions*.*'
+        '**/*Extensions*.*',
+        '**/data/entities/*.*',
+        '**/domain/entities/*.*',
+        '**/models/*.*',
+        '**/client/database/*.*',
+        '**/MappingKt.class',
 ]
 
 def createVariantCoverage(variant) {

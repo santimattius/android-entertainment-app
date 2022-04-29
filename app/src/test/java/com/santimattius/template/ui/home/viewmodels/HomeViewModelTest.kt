@@ -1,11 +1,13 @@
 package com.santimattius.template.ui.home.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.santimattius.template.domain.usecases.FetchPopularMovies
 import com.santimattius.template.domain.usecases.GetPopularMovies
 import com.santimattius.template.ui.home.HomeViewModel
 import com.santimattius.template.ui.home.models.HomeState
-import com.santimattius.template.utils.CoroutinesTestRule
+import com.santimattius.template.utils.MainCoroutinesTestRule
 import com.santimattius.template.utils.getOrAwaitValue
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual
@@ -19,14 +21,14 @@ class HomeViewModelTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @get:Rule
-    val coroutinesTestRule = CoroutinesTestRule()
+    val coroutinesTestRule = MainCoroutinesTestRule()
 
     @Test
     fun `check case when init view model`() {
 
-        val userCase = GetPopularMovies(repository = FakeMovieRepository { emptyList() })
+        val userCase = GetPopularMovies(repository = FakeMovieRepository(answers = { emptyList() }))
 
-        val viewModel = HomeViewModel(userCase)
+        val viewModel = HomeViewModel(userCase, mockk())
 
         assertThat(viewModel.state.getOrAwaitValue(), IsEqual(HomeState.Data(emptyList())))
     }
@@ -34,9 +36,10 @@ class HomeViewModelTest {
     @Test
     fun `check when init fail with exception`() {
 
-        val userCase = GetPopularMovies(repository = FakeMovieRepository { throw TestException() })
+        val userCase =
+            GetPopularMovies(repository = FakeMovieRepository(answers = { throw TestException() }))
 
-        val viewModel = HomeViewModel(userCase)
+        val viewModel = HomeViewModel(userCase, mockk())
 
         assertThat(viewModel.state.getOrAwaitValue(), IsEqual(HomeState.Error))
     }
@@ -44,13 +47,15 @@ class HomeViewModelTest {
     @Test
     fun `check case with retry`() {
 
-        val userCase = GetPopularMovies(repository = FakeMovieRepository { emptyList() })
+        val userCase = FetchPopularMovies(repository = FakeMovieRepository(result = {
+            Result.failure(TestException())
+        }))
 
-        val viewModel = HomeViewModel(userCase)
+        val viewModel = HomeViewModel(mockk(), userCase)
 
-        viewModel.retry()
+        viewModel.refresh()
 
-        assertThat(viewModel.state.getOrAwaitValue(), IsEqual(HomeState.Data(emptyList())))
+        assertThat(viewModel.state.getOrAwaitValue(), IsEqual(HomeState.Error))
     }
 
     class TestException : Throwable()

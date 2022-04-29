@@ -46,6 +46,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.state.observe(viewLifecycleOwner, ::onStateChange)
+        viewBinding.swipeContainer.setOnRefreshListener {
+            viewModel.refresh()
+        }
     }
 
     private fun onStateChange(state: HomeState) {
@@ -62,14 +65,20 @@ class HomeFragment : Fragment() {
             HomeState.Loading -> {
                 loading(visible = true)
             }
+            HomeState.Refreshing -> refresh(true)
+            HomeState.Completed -> refresh(false)
         }
+    }
+
+    private fun refresh(refreshing: Boolean) = with(viewBinding.swipeContainer) {
+        this.isRefreshing = refreshing
     }
 
     private fun showError() {
         showDialog(
             message = getString(R.string.message_loading_error),
             positiveAction = DialogAction(text = getString(R.string.button_text_positive_error)) {
-                viewModel.retry()
+                viewModel.refresh()
             },
             negativeAction = DialogAction(text = getString(R.string.button_text_negative_error)) {
                 requireActivity().finish()
@@ -77,7 +86,12 @@ class HomeFragment : Fragment() {
         )
     }
 
-    private fun loading(visible: Boolean) = run { viewBinding.homeProgressBar.isVisible = visible }
+    private fun loading(visible: Boolean) = run {
+        if (viewBinding.swipeContainer.isRefreshing) {
+            viewBinding.swipeContainer.isRefreshing = false
+        }
+        viewBinding.homeProgressBar.isVisible = visible
+    }
 
     companion object {
         private const val SPAN_ITEMS = 2

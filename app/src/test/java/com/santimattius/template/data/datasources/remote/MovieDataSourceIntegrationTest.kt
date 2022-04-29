@@ -1,9 +1,9 @@
-package com.santimattius.template.data.datasources
+package com.santimattius.template.data.datasources.remote
 
 
+import com.santimattius.template.data.client.network.TheMovieDBService
+import com.santimattius.template.data.client.network.service
 import com.santimattius.template.data.datasources.implementation.MovieDataSource
-import com.santimattius.template.data.network.service.TheMovieDBService
-import com.santimattius.template.data.network.service.service
 import com.santimattius.template.utils.JsonLoader
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -22,14 +22,14 @@ class MovieDataSourceIntegrationTest {
     private val jsonLoader = JsonLoader()
     private lateinit var movieDataSource: MovieDataSource
     private lateinit var mockWebServer: MockWebServer
-    private lateinit var client: TheMovieDBService
+
 
     @Before
     fun setup() {
         mockWebServer = MockWebServer()
         mockWebServer.start()
         val baseUrl = mockWebServer.url("/").toUri().toString()
-        client = service(baseUrl = baseUrl)
+        val client = service<TheMovieDBService>(baseUrl = baseUrl)
         movieDataSource = MovieDataSource(client)
     }
 

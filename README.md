@@ -27,7 +27,7 @@ Using local properties for define api key:
 Below you will find the libraries used to build the template and according to my criteria the most
 used in android development so far.
 
-- **Koin** - dependencie provider:
+- **Koin** - dependencies provider:
     - https://insert-koin.io/
 - **Retrofit** - networking:
     - https://square.github.io/retrofit/

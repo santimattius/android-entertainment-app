@@ -3,7 +3,7 @@ project.ext {
     gradle_version = '7.1.2'
     kotlin_version = '1.6.10'
     kotlin_coroutines_version = '1.5.2'
-    coroutines_test_version = '1.4.1'
+    coroutines_test_version = '1.6.1'
 
     //UI
     appcompat_version = '1.4.1'

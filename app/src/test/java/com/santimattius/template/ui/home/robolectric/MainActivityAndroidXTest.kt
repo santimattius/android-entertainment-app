@@ -1,15 +1,16 @@
-package com.santimattius.template.ui.home
+package com.santimattius.template.ui.home.robolectric
 
 import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.santimattius.template.data.repositories.asMovies
+import com.santimattius.template.data.dtoToDomain
 import com.santimattius.template.domain.repositories.MovieRepository
+import com.santimattius.template.ui.home.HomeFragment
 import com.santimattius.template.ui.home.components.viewholders.MovieViewHolder
 import com.santimattius.template.ui.home.viewmodels.FakeMovieRepository
-import com.santimattius.template.utils.CoroutinesTestRule
 import com.santimattius.template.utils.KoinRule
+import com.santimattius.template.utils.MainCoroutinesTestRule
 import com.santimattius.template.utils.TheMovieDBMother
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers.equalTo
@@ -30,14 +31,12 @@ class MainActivityAndroidXTest : KoinTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @get:Rule
-    val coroutinesTestRule = CoroutinesTestRule()
+    val coroutinesTestRule = MainCoroutinesTestRule()
 
     @get:Rule
     val koinRule = KoinRule.androidx(module = module {
         single<MovieRepository> {
-            FakeMovieRepository {
-                TheMovieDBMother.movies().asMovies()
-            }
+            FakeMovieRepository(answers = { TheMovieDBMother.movies().dtoToDomain() })
         }
     })
 

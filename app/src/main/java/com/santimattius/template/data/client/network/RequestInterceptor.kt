@@ -1,4 +1,4 @@
-package com.santimattius.template.data.network.service
+package com.santimattius.template.data.client.network
 
 import okhttp3.Interceptor
 import okhttp3.Response

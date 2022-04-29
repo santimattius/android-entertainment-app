@@ -3,6 +3,7 @@ package com.santimattius.template.ui.home.components.viewholders
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.santimattius.template.core.presentation.load
 import com.santimattius.template.databinding.ItemMovieBinding
@@ -14,7 +15,10 @@ class MovieViewHolder(
 
     fun bind(item: MovieUiModel, onItemClick: (MovieUiModel) -> Unit = {}) {
         with(viewBinding) {
-            imageMovie.load(item.imageUrl)
+            imageLoader.isVisible = true
+            imageMovie.load(item.imageUrl) {
+                imageLoader.isVisible = false
+            }
             imageMovie.contentDescription = item.title
             itemRootContainer.setOnClickListener { onItemClick(item) }
         }

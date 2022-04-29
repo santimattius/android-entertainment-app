@@ -10,12 +10,12 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 object TheMovieDBMother {
 
     private val moshi: Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-
+    private val loader = JsonLoader()
     fun list() = (1..10).map { MovieDto(id = it) }
 
     fun response(): Response<MovieDto>? {
         val adapter = adapter<MovieDto>()
-        return adapter?.fromJson(JsonLoader().load("movie_popular_response_success"))
+        return adapter?.fromJson(loader.load("movie_popular_response_success"))
     }
 
     fun movies() = response()?.results.orEmpty()

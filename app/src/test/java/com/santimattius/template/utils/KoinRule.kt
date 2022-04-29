@@ -34,12 +34,12 @@ class KoinRule(
 
         fun robolectric(module: Module) = robolectric(mutableListOf(module))
 
-        private fun robolectric(modules: List<Module>) =
+        private fun robolectric(modules: List<Module> = emptyList()) =
             KoinRule(RuntimeEnvironment.getApplication(), modules)
 
         fun androidx(module: Module) = androidx(mutableListOf(module))
 
-        private fun androidx(modules: List<Module>) =
+        fun androidx(modules: List<Module> = emptyList()) =
             KoinRule(ApplicationProvider.getApplicationContext(), modules)
     }
 }

@@ -54,6 +54,7 @@ jobs:
 #          script: ./gradlew app:testDebugUnitTestCoverage
       - name: Run Tests
         run: ./gradlew app:testDebugUnitTestCoverage
+
       - name: Generate Report
         uses: actions/upload-artifact@v2
         with:
