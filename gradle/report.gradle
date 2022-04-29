@@ -40,7 +40,12 @@ ext.excludes = [
         '**/*_MembersInjector.class',
         '**/*_Factory*.*',
         '**/*_Provide*Factory*.*',
-        '**/*Extensions*.*'
+        '**/*Extensions*.*',
+        '**/data/entities/*.*',
+        '**/domain/entities/*.*',
+        '**/models/*.*',
+        '**/client/database/*.*',
+        '**/MappingKt.class',
 ]
 
 def createVariantCoverage(variant) {
