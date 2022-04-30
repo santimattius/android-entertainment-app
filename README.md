@@ -16,7 +16,7 @@ external dependencies.
 
 TheMovieDB API: Check this [documentation](https://www.themoviedb.org/documentation/api).
 
-## {Setup}
+## Setup
 
 Using local properties for define api key:
 
