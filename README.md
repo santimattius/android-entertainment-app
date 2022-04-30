@@ -8,8 +8,7 @@ external dependencies.
 [//]: # (Screenshot)
 <p align="center">
 
-  <img src="https://github.com/santimattius/android-movie-app-template/blob/master/screenshoot/screenshot_app_light.png?raw=true" alt="App Capture"/>
-  <img src="https://github.com/santimattius/android-movie-app-template/blob/master/screenshoot/screenshot_app_dark.png?raw=true" alt="App Capture"/>
+  <img wight="280" src="https://github.com/santimattius/android-entertainment-app/blob/master/screenshoot/entertainment_app.png?raw=true" alt="App Capture"/>
 
 </p>
 
@@ -50,6 +49,8 @@ used in android development so far.
 - **[Glide](https://github.com/bumptech/glide)**, with image loader.
 - **[Kotlin coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)**.
 - **[Mockk](https://mockk.io/)**, testing library.
+- **[MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver)**, networking testing library.
+- **[Robolectric](http://robolectric.org/)**, android testing library.
 
 ## References
 
