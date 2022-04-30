@@ -1,10 +1,11 @@
-# Android Movie App Template
+# Android Entertainment App
 
 This is a template to build an Android app applying good practices and using a clean architecture,
 you will see that the code is super decoupled with external frameworks and even with the same
 Android framework, this will help you to model your domain purely in Kotlin without generating
 external dependencies.
 
+[//]: # (Screenshot)
 <p align="center">
 
   <img src="https://github.com/santimattius/android-movie-app-template/blob/master/screenshoot/screenshot_app_light.png?raw=true" alt="App Capture"/>
@@ -12,33 +13,43 @@ external dependencies.
 
 </p>
 
-## TheMovieDB API
+## Content
 
-Check this documentation: https://www.themoviedb.org/documentation/api
+TheMovieDB API: Check this [documentation](https://www.themoviedb.org/documentation/api).
 
-### Setup TheMovieDb apikey on project
+## {Setup}
 
 Using local properties for define api key:
 
-- Example: https://gist.github.com/ramonaharrison/7a2061bf5ee920dfff53b37ed83520ec
+```properties
+apiKey="{your-api-key}"
+```
+
+## Verification
+
+Run check project:
+
+```shell
+> ./gradlew check
+```
+
+Run tests project:
+
+```shell
+> ./gradlew test
+```
 
 ## Dependencies
 
 Below you will find the libraries used to build the template and according to my criteria the most
 used in android development so far.
 
-- **Koin** - dependencies provider:
-    - https://insert-koin.io/
-- **Retrofit** - networking:
-    - https://square.github.io/retrofit/
-- **Moshi** - json parser:
-    - https://github.com/square/moshi
-- **Glide** with image loader:
-    - https://github.com/bumptech/glide
-- **Kotlin coroutines**
-    - https://kotlinlang.org/docs/reference/coroutines-overview.html
-- **Mockk**, testing library
-    - https://mockk.io/
+- **[Koin](https://insert-koin.io/)**, dependencies provider.
+- **[Retrofit](https://square.github.io/retrofit/)**, networking.
+- **[Moshi](https://github.com/square/moshi)**, json parser.
+- **[Glide](https://github.com/bumptech/glide)**, with image loader.
+- **[Kotlin coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)**.
+- **[Mockk](https://mockk.io/)**, testing library.
 
 ## References
 

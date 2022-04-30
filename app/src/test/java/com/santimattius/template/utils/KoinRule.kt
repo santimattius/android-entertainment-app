@@ -21,7 +21,7 @@ class KoinRule(
     override fun starting(description: Description?) {
         super.starting(description)
         initKoin(context.applicationContext as Application) {
-            module(this@KoinRule.modules)
+            modules(this@KoinRule.modules)
         }
     }
 

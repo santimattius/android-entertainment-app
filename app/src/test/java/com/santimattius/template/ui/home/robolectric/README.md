@@ -21,3 +21,21 @@ class MyActivityTest {
 }
 
 ```
+
+See more [here](http://robolectric.org/)
+
+## AndroidX Test
+
+Robolectric is intended to be fully compatible with Android’s official testing libraries since
+version 4.0. As such we encourage you to try these new APIs and provide feedback. At some point the
+Robolectric equivalents will be deprecated and removed. Using the AndroidX Test APIs reduces the
+cognitive load for you as a developer, with just one set of APIs to learn for the same Android
+concept, no matter if you are writing an Robolectric test or an instrumentation test. Furthermore it
+will make your tests more portable and compatible with our future plans. 
+
+**TestRunner**
+It is now possible to use the AndroidX test runner in Robolectric tests. If you require a custom
+test runner currently, please check out the new configuration and plugin API and let us know if
+there are any extension points missing that you require.
+
+See more [here](http://robolectric.org/androidx_test/)

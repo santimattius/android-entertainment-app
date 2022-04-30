@@ -61,4 +61,4 @@ private val theMovieDBModule = module {
     single<TheMovieDBService> { service(key = get(named(API_KEY_NAMED))) }
 }
 
-internal val modules = listOf(presentationModule, domainModule, dataModule, theMovieDBModule)
+internal val moduleDefinitions = listOf(presentationModule, domainModule, dataModule, theMovieDBModule)
